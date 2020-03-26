@@ -1,7 +1,7 @@
 let app_folder_name = 'starter-node-angular';
 let privateKey = 'final.pem';
 let host = '54.237.251.183';
-
+var startScipt = "server.js";
 
 //npm install node-cmd node-ssh
 var cmd = require('node-cmd');
@@ -66,7 +66,7 @@ function createRemoteTempFolder() {
 // stops mongodb and node services on the remote server
 function stopRemoteServices() {
     return ssh.execCommand(
-        'pm2 stop all && sudo service mongod stop', {
+        'pm2 stop all', {
         cwd: '/home/ubuntu'
     });
 }
@@ -92,7 +92,7 @@ function updateRemoteApp() {
 // restart mongodb and node services on the remote server
 function restartRemoteServices() {
     return ssh.execCommand(
-        `cd ${app_folder_name} && sudo service mongod start && pm2 start app.js`, {
+        `cd ${app_folder_name} && pm2 start ${startScipt}`, {
         cwd: '/home/ubuntu'
     });
 }
